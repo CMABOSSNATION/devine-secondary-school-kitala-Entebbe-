@@ -1,0 +1,1736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Devine Secondary School – Kitala, Entebbe, Uganda</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    /* ═══════════════════════════════════════════════
+       DESIGN TOKENS
+    ═══════════════════════════════════════════════ */
+    :root {
+      --navy:       #0d1f3c;
+      --navy2:      #1a3a5c;
+      --gold:       #c9a035;
+      --gold-lt:    #e8c45a;
+      --gold-dk:    #9a7520;
+      --green:      #1b4332;
+      --green-mid:  #2d6a4f;
+      --cream:      #f7f4ef;
+      --white:      #ffffff;
+      --gray:       #6b7280;
+      --gray-lt:    #e5e7eb;
+      --shadow:     rgba(13,31,60,.12);
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);overflow-x:hidden}
+
+    /* ═══════════════════════════════════════════════
+       NAVBAR
+    ═══════════════════════════════════════════════ */
+    #navbar{
+      position:fixed;top:0;left:0;right:0;z-index:1000;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:0 4%;height:70px;
+      background:rgba(13,31,60,.97);
+      backdrop-filter:blur(12px);
+      border-bottom:1px solid rgba(201,160,53,.2);
+      transition:box-shadow .3s;
+    }
+    .nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none}
+    /* SVG shield crest */
+    .nav-crest{width:48px;height:52px;flex-shrink:0}
+    .nav-title{line-height:1.15}
+    .nav-title strong{display:block;font-family:'Playfair Display',serif;font-size:18px;font-weight:900;color:var(--white);letter-spacing:.5px}
+    .nav-title small{display:block;font-size:9px;color:var(--gold);letter-spacing:2.5px;text-transform:uppercase}
+    .nav-links{display:flex;gap:26px;list-style:none}
+    .nav-links a{color:rgba(255,255,255,.78);text-decoration:none;font-size:13.5px;font-weight:500;letter-spacing:.2px;transition:color .2s}
+    .nav-links a:hover{color:var(--gold)}
+    .portal-btn{
+      display:flex;align-items:center;gap:7px;
+      background:var(--gold);color:var(--navy);
+      border:none;padding:9px 18px;border-radius:6px;
+      font-weight:700;font-size:13px;cursor:pointer;
+      text-decoration:none;letter-spacing:.3px;
+      transition:background .2s,transform .15s;
+    }
+    .portal-btn:hover{background:var(--gold-lt);transform:translateY(-1px)}
+    .portal-btn svg{width:14px;height:14px}
+    .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none}
+    .hamburger span{display:block;width:25px;height:2px;background:var(--white);border-radius:2px;transition:.3s}
+
+    /* ═══════════════════════════════════════════════
+       HERO — PHOTO COLLAGE
+    ═══════════════════════════════════════════════ */
+    #hero{margin-top:70px;position:relative;background:var(--navy);overflow:hidden}
+    .hero-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      grid-template-rows:230px 200px;
+      gap:3px;position:relative;
+    }
+    .hero-grid::after{
+      content:'';position:absolute;inset:0;
+      background:linear-gradient(to bottom,
+        rgba(13,31,60,.15) 0%,
+        rgba(13,31,60,.45) 45%,
+        rgba(13,31,60,.92) 100%);
+      pointer-events:none;z-index:2;
+    }
+    .hc{overflow:hidden;position:relative;cursor:pointer}
+    .hc img{
+      width:100%;height:100%;object-fit:cover;
+      display:block;transition:transform .5s ease;
+    }
+    .hc:hover img{transform:scale(1.07)}
+    .hc-lbl{
+      position:absolute;bottom:8px;left:10px;z-index:1;
+      font-size:10px;color:rgba(255,255,255,.5);
+      letter-spacing:1.5px;text-transform:uppercase;
+    }
+    .hero-text{
+      position:absolute;bottom:0;left:0;right:0;z-index:3;
+      text-align:center;padding:24px 5% 40px;
+    }
+    .hero-tagline{
+      font-family:'Playfair Display',serif;
+      font-size:clamp(26px,5.5vw,62px);
+      font-weight:900;color:var(--gold);line-height:1.05;
+      text-shadow:0 3px 24px rgba(0,0,0,.7);
+      letter-spacing:.5px;text-transform:uppercase;
+    }
+
+    /* ═══════════════════════════════════════════════
+       ANNOUNCEMENT TICKER
+    ═══════════════════════════════════════════════ */
+    .ticker-bar{background:var(--gold);padding:9px 0;overflow:hidden}
+    .ticker-inner{display:flex;gap:72px;animation:ticker 32s linear infinite;white-space:nowrap}
+    .ticker-inner span{font-size:12px;font-weight:700;color:var(--navy);letter-spacing:.4px}
+    .ticker-inner span::before{content:'◆ '}
+    @keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+    /* ═══════════════════════════════════════════════
+       FEATURE CARDS
+    ═══════════════════════════════════════════════ */
+    #highlights{background:var(--white);padding:52px 4% 44px}
+    .feat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+    .feat-card{
+      background:var(--white);border-radius:16px;overflow:hidden;
+      border:1px solid var(--gray-lt);
+      box-shadow:0 2px 14px var(--shadow);
+      cursor:pointer;transition:all .3s;
+    }
+    .feat-card:hover{transform:translateY(-7px);box-shadow:0 18px 44px var(--shadow);border-color:var(--gold)}
+    .feat-thumb{
+      width:100%;height:138px;overflow:hidden;position:relative;
+    }
+    .feat-thumb img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+    .feat-card:hover .feat-thumb img{transform:scale(1.06)}
+    .feat-badge{
+      position:absolute;bottom:-15px;left:50%;transform:translateX(-50%);
+      width:34px;height:34px;border-radius:50%;
+      background:var(--navy);border:3px solid var(--white);
+      display:flex;align-items:center;justify-content:center;
+      font-size:15px;z-index:2;
+    }
+    .feat-body{padding:26px 16px 18px}
+    .feat-body h3{font-size:13.5px;font-weight:800;color:var(--navy);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;line-height:1.3}
+    .feat-body p{font-size:12.5px;color:var(--gray);line-height:1.5}
+
+    /* ═══════════════════════════════════════════════
+       CTA BUTTONS
+    ═══════════════════════════════════════════════ */
+    .cta-row{
+      display:flex;justify-content:center;gap:18px;flex-wrap:wrap;
+      padding:0 4% 54px;background:var(--white);
+    }
+    .btn-apply{
+      background:var(--gold);color:var(--navy);
+      padding:14px 38px;border-radius:8px;border:2px solid var(--gold);
+      font-weight:800;font-size:13.5px;text-decoration:none;
+      letter-spacing:1.2px;text-transform:uppercase;transition:all .2s;
+    }
+    .btn-apply:hover{background:var(--gold-lt);transform:translateY(-2px);box-shadow:0 8px 24px rgba(201,160,53,.4)}
+    .btn-tour{
+      background:var(--green);color:var(--white);
+      padding:14px 38px;border-radius:8px;border:2px solid var(--green);
+      font-weight:800;font-size:13.5px;text-decoration:none;
+      letter-spacing:1.2px;text-transform:uppercase;transition:all .2s;
+    }
+    .btn-tour:hover{background:var(--green-mid);transform:translateY(-2px)}
+
+    /* ═══════════════════════════════════════════════
+       CAMPUS HIGHLIGHTS
+    ═══════════════════════════════════════════════ */
+    #campus{background:var(--cream);padding:64px 4%}
+    .campus-heading{
+      text-align:center;
+      font-family:'Playfair Display',serif;
+      font-size:clamp(20px,3.5vw,34px);
+      font-weight:900;color:var(--navy);
+      letter-spacing:2px;text-transform:uppercase;margin-bottom:34px;
+    }
+    .campus-layout{
+      display:grid;
+      grid-template-columns:1.1fr 1fr;
+      gap:14px;
+    }
+    .campus-cell{
+      border-radius:14px;overflow:hidden;position:relative;cursor:pointer;
+      transition:transform .3s,box-shadow .3s;
+    }
+    .campus-cell:hover{transform:scale(1.015);box-shadow:0 14px 38px rgba(0,0,0,.2)}
+    .campus-cell.tall{grid-row:span 2}
+    .campus-cell img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+    .campus-cell:hover img{transform:scale(1.04)}
+    .campus-cell.tall img{min-height:440px}
+    .campus-cell:not(.tall) img{min-height:195px}
+    .campus-sub-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .campus-sub-row .campus-cell img{min-height:165px}
+    .cam-cap{
+      position:absolute;bottom:0;left:0;right:0;
+      background:linear-gradient(to top,rgba(13,31,60,.82),transparent);
+      padding:22px 14px 12px;
+      color:rgba(255,255,255,.92);font-size:12.5px;font-weight:600;letter-spacing:.4px;
+    }
+
+    /* ═══════════════════════════════════════════════
+       ABOUT SECTION
+    ═══════════════════════════════════════════════ */
+    #about{background:var(--white);padding:80px 4%}
+    .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+    .about-img-wrap{position:relative}
+    .about-img-wrap img{width:100%;border-radius:18px;object-fit:cover;aspect-ratio:4/5;display:block}
+    .about-badge{
+      position:absolute;bottom:-18px;right:-18px;
+      background:var(--gold);border-radius:12px;padding:16px 22px;
+      text-align:center;box-shadow:0 8px 28px rgba(0,0,0,.18);
+    }
+    .about-badge strong{display:block;font-size:28px;font-weight:900;color:var(--navy);font-family:'Playfair Display',serif}
+    .about-badge span{font-size:11px;color:var(--navy);opacity:.75}
+    .section-label{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:10px}
+    .section-title{font-family:'Playfair Display',serif;font-size:clamp(26px,3.8vw,44px);font-weight:900;color:var(--navy);line-height:1.15;margin-bottom:14px}
+    .section-sub{font-size:15.5px;color:var(--gray);line-height:1.75;max-width:560px}
+    .values-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:28px}
+    .val-item{display:flex;align-items:center;gap:10px;background:var(--cream);border-radius:8px;padding:11px 14px}
+    .val-item span{font-size:13.5px;font-weight:600;color:var(--navy)}
+
+    /* ═══════════════════════════════════════════════
+       PROGRAMS
+    ═══════════════════════════════════════════════ */
+    #programs{background:var(--cream);padding:80px 4%}
+    .prog-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px;margin-top:48px}
+    .prog-card{
+      background:var(--white);border-radius:16px;overflow:hidden;
+      border:1px solid var(--gray-lt);transition:all .3s;cursor:pointer;
+    }
+    .prog-card:hover{transform:translateY(-6px);box-shadow:0 18px 44px var(--shadow);border-color:var(--gold)}
+    .prog-head{background:var(--navy);padding:26px;display:flex;align-items:center;gap:14px}
+    .prog-icon{width:50px;height:50px;border-radius:12px;background:rgba(201,160,53,.15);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+    .prog-head h3{color:var(--white);font-size:16px;font-weight:700}
+    .prog-head small{color:var(--gold);font-size:11.5px;letter-spacing:1px;display:block;margin-top:2px}
+    .prog-body{padding:22px 26px}
+    .prog-body p{font-size:13.5px;color:var(--gray);line-height:1.7;margin-bottom:14px}
+    .tags{display:flex;flex-wrap:wrap;gap:7px}
+    .tag{background:var(--cream);border-radius:20px;padding:4px 11px;font-size:11.5px;color:var(--navy);font-weight:500}
+
+    /* ═══════════════════════════════════════════════
+       WHY DEVINE
+    ═══════════════════════════════════════════════ */
+    #why{background:var(--navy);padding:80px 4%}
+    #why .section-title{color:var(--white)}
+    #why .section-sub{color:rgba(255,255,255,.55)}
+    .why-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:22px;margin-top:48px}
+    .why-card{
+      background:rgba(255,255,255,.04);border:1px solid rgba(201,160,53,.15);
+      border-radius:16px;padding:30px 26px;transition:all .3s;
+    }
+    .why-card:hover{background:rgba(201,160,53,.07);border-color:rgba(201,160,53,.4);transform:translateY(-4px)}
+    .why-num{font-family:'Playfair Display',serif;font-size:46px;font-weight:900;color:rgba(201,160,53,.2);line-height:1;margin-bottom:14px}
+    .why-card h3{color:var(--white);font-size:17px;font-weight:700;margin-bottom:8px}
+    .why-card p{color:rgba(255,255,255,.5);font-size:13.5px;line-height:1.7}
+
+    /* ═══════════════════════════════════════════════
+       ADMISSIONS
+    ═══════════════════════════════════════════════ */
+    #admissions{background:var(--cream);padding:80px 4%}
+    .adm-grid{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:start;margin-top:48px}
+    .steps{display:flex;flex-direction:column;gap:20px}
+    .step{display:flex;gap:18px;align-items:flex-start}
+    .step-n{
+      width:44px;height:44px;flex-shrink:0;
+      background:var(--navy);color:var(--gold);
+      border-radius:50%;display:flex;align-items:center;justify-content:center;
+      font-family:'Playfair Display',serif;font-size:18px;font-weight:900;
+    }
+    .step h4{font-size:15px;font-weight:700;color:var(--navy);margin-bottom:4px}
+    .step p{font-size:13.5px;color:var(--gray);line-height:1.65}
+    .adm-form{background:var(--white);border-radius:18px;padding:34px;box-shadow:0 8px 36px var(--shadow);border:1px solid var(--gray-lt)}
+    .adm-form h3{font-family:'Playfair Display',serif;font-size:22px;color:var(--navy);margin-bottom:22px}
+    .fg{margin-bottom:16px}
+    .fg label{display:block;font-size:12.5px;font-weight:700;color:var(--navy);margin-bottom:5px;letter-spacing:.3px}
+    .fg input,.fg select,.fg textarea{
+      width:100%;padding:11px 14px;
+      border:1.5px solid var(--gray-lt);border-radius:8px;
+      font-family:'DM Sans',sans-serif;font-size:14px;color:var(--navy);
+      background:var(--cream);outline:none;transition:border .2s;
+    }
+    .fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--gold);background:var(--white)}
+    .fg textarea{resize:vertical;min-height:88px}
+    .fg-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .submit-btn{
+      width:100%;padding:14px;background:var(--navy);color:var(--white);
+      border:none;border-radius:8px;font-size:15px;font-weight:700;
+      cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif;letter-spacing:.4px;
+    }
+    .submit-btn:hover{background:var(--navy2);transform:translateY(-1px)}
+
+    /* ═══════════════════════════════════════════════
+       GALLERY
+    ═══════════════════════════════════════════════ */
+    #gallery{background:var(--white);padding:80px 4%}
+    .gal-grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      grid-template-rows:repeat(2,200px);
+      gap:12px;margin-top:48px;
+    }
+    .gal-item{border-radius:12px;overflow:hidden;cursor:pointer;position:relative;transition:all .3s}
+    .gal-item:hover{transform:scale(1.02);box-shadow:0 12px 32px rgba(0,0,0,.2)}
+    .gal-item:nth-child(1){grid-column:span 2;grid-row:span 2}
+    .gal-item:nth-child(4){grid-column:span 2}
+    .gal-item img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+    .gal-item:hover img{transform:scale(1.05)}
+    .gal-overlay{
+      position:absolute;inset:0;
+      background:rgba(13,31,60,.5);
+      display:flex;align-items:flex-end;padding:14px;
+      opacity:0;transition:.3s;
+    }
+    .gal-item:hover .gal-overlay{opacity:1}
+    .gal-overlay span{color:var(--white);font-size:13px;font-weight:600}
+
+    /* ═══════════════════════════════════════════════
+       NEWS
+    ═══════════════════════════════════════════════ */
+    #news{background:var(--cream);padding:80px 4%}
+    .news-layout{display:grid;grid-template-columns:2fr 1fr;gap:26px;margin-top:48px}
+    .news-feat{
+      background:var(--navy);border-radius:18px;overflow:hidden;
+      position:relative;min-height:360px;display:flex;align-items:flex-end;padding:32px;
+    }
+    .news-feat img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.4}
+    .news-feat::before{
+      content:'';position:absolute;inset:0;
+      background:linear-gradient(to top,rgba(13,31,60,1) 0%,rgba(13,31,60,.15) 65%,transparent 100%);
+      z-index:1;
+    }
+    .news-feat-body{position:relative;z-index:2}
+    .news-date{font-size:11px;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px}
+    .news-feat-body h2{font-family:'Playfair Display',serif;font-size:24px;color:var(--white);margin-bottom:10px;line-height:1.3}
+    .news-feat-body p{color:rgba(255,255,255,.6);font-size:13.5px;line-height:1.65}
+    .news-more{display:inline-block;margin-top:18px;color:var(--gold);font-size:13px;font-weight:700;text-decoration:none}
+    .news-side{display:flex;flex-direction:column;gap:14px}
+    .news-card{
+      background:var(--white);border-radius:13px;padding:18px;
+      border:1.5px solid transparent;transition:all .25s;cursor:pointer;
+    }
+    .news-card:hover{border-color:var(--gold);background:var(--white);box-shadow:0 4px 18px var(--shadow)}
+    .news-card h4{font-size:14.5px;font-weight:700;color:var(--navy);margin:5px 0 4px;line-height:1.35}
+    .news-card p{font-size:12.5px;color:var(--gray);line-height:1.55}
+
+    /* ═══════════════════════════════════════════════
+       CONTACT + MAP
+    ═══════════════════════════════════════════════ */
+    #contact{background:var(--navy);padding:80px 4%}
+    #contact .section-title{color:var(--white)}
+    #contact .section-sub{color:rgba(255,255,255,.55)}
+    .contact-layout{display:grid;grid-template-columns:1fr 1fr;gap:60px;margin-top:48px}
+    .contact-items{margin-top:30px;display:flex;flex-direction:column;gap:22px}
+    .c-item{display:flex;align-items:flex-start;gap:14px}
+    .c-icon{
+      width:46px;height:46px;border-radius:12px;flex-shrink:0;
+      background:rgba(201,160,53,.12);border:1px solid rgba(201,160,53,.2);
+      display:flex;align-items:center;justify-content:center;font-size:19px;
+    }
+    .c-item h4{font-size:12px;color:var(--gold);letter-spacing:1px;text-transform:uppercase;margin-bottom:3px;font-weight:700}
+    .c-item p{color:rgba(255,255,255,.72);font-size:14.5px;line-height:1.65}
+    .c-item a{color:rgba(255,255,255,.72);text-decoration:none;transition:color .2s}
+    .c-item a:hover{color:var(--gold)}
+    .wa-card{
+      background:linear-gradient(135deg,#25D366,#128C7E);
+      border-radius:14px;padding:24px 28px;
+      display:flex;align-items:center;gap:18px;margin-top:26px;
+      text-decoration:none;transition:all .3s;
+      box-shadow:0 8px 22px rgba(37,211,102,.25);
+    }
+    .wa-card:hover{transform:translateY(-3px);box-shadow:0 16px 38px rgba(37,211,102,.35)}
+    .wa-card .wa-icon{font-size:40px}
+    .wa-text h4{color:var(--white);font-size:16px;font-weight:700;margin-bottom:3px}
+    .wa-text p{color:rgba(255,255,255,.8);font-size:12.5px}
+    .wa-text strong{display:block;color:var(--white);font-size:14px;margin-top:3px}
+    /* Real Google Maps embed */
+    .map-wrap{
+      border-radius:18px;overflow:hidden;
+      border:1px solid rgba(201,160,53,.2);
+      box-shadow:0 8px 32px rgba(0,0,0,.3);
+      display:flex;flex-direction:column;
+    }
+    .map-wrap iframe{width:100%;height:380px;display:block;border:none}
+    .map-footer{
+      background:rgba(255,255,255,.05);
+      padding:16px 20px;
+      display:flex;align-items:center;gap:10px;
+    }
+    .map-footer span{color:rgba(255,255,255,.5);font-size:12.5px;line-height:1.5}
+
+    /* ═══════════════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════════════ */
+    footer{background:#060e1a;padding:56px 4% 22px;border-top:1px solid rgba(201,160,53,.1)}
+    .foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:44px}
+    .foot-brand p{color:rgba(255,255,255,.42);font-size:13.5px;line-height:1.75;margin:14px 0 18px}
+    .foot-socials{display:flex;gap:10px}
+    .soc-btn{
+      width:36px;height:36px;border-radius:8px;
+      background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);
+      display:flex;align-items:center;justify-content:center;
+      font-size:15px;text-decoration:none;transition:all .2s;color:rgba(255,255,255,.6);
+    }
+    .soc-btn:hover{background:rgba(201,160,53,.15);border-color:rgba(201,160,53,.3);color:var(--gold)}
+    .foot-col h4{color:var(--gold);font-size:11.5px;letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;font-weight:700}
+    .foot-col ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+    .foot-col a{color:rgba(255,255,255,.42);text-decoration:none;font-size:13.5px;transition:color .2s}
+    .foot-col a:hover{color:var(--gold)}
+    .foot-bottom{border-top:1px solid rgba(255,255,255,.06);padding-top:22px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+    .foot-bottom p{color:rgba(255,255,255,.28);font-size:12.5px}
+
+    /* ═══════════════════════════════════════════════
+       FLOATING WHATSAPP
+    ═══════════════════════════════════════════════ */
+    .wa-float{
+      position:fixed;bottom:26px;right:26px;z-index:999;
+      width:58px;height:58px;border-radius:50%;
+      background:#25D366;display:flex;align-items:center;justify-content:center;
+      font-size:28px;text-decoration:none;
+      box-shadow:0 6px 22px rgba(37,211,102,.45);
+      animation:wa-pulse 2.5s infinite;transition:transform .3s;
+    }
+    .wa-float:hover{transform:scale(1.1)}
+    @keyframes wa-pulse{
+      0%,100%{box-shadow:0 6px 22px rgba(37,211,102,.45)}
+      50%{box-shadow:0 6px 38px rgba(37,211,102,.65),0 0 0 10px rgba(37,211,102,.08)}
+    }
+
+    /* ═══════════════════════════════════════════════
+       MODAL
+    ═══════════════════════════════════════════════ */
+    .modal-bg{
+      position:fixed;inset:0;z-index:2000;
+      background:rgba(5,10,20,.88);backdrop-filter:blur(8px);
+      display:flex;align-items:center;justify-content:center;padding:20px;
+      opacity:0;pointer-events:none;transition:opacity .3s;
+    }
+    .modal-bg.open{opacity:1;pointer-events:all}
+    .modal{
+      background:var(--white);border-radius:20px;max-width:490px;width:100%;
+      padding:40px;text-align:center;position:relative;
+      transform:translateY(24px);transition:transform .3s;
+    }
+    .modal-bg.open .modal{transform:translateY(0)}
+    .modal-close{position:absolute;top:14px;right:16px;background:none;border:none;font-size:22px;cursor:pointer;color:var(--gray)}
+    .modal-icon{font-size:62px;margin-bottom:12px}
+    .modal h3{font-family:'Playfair Display',serif;font-size:23px;color:var(--navy);margin-bottom:8px}
+    .modal p{color:var(--gray);font-size:15px;line-height:1.65}
+
+    /* ═══════════════════════════════════════════════
+       ANIMATIONS
+    ═══════════════════════════════════════════════ */
+    @keyframes fadeUp{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:translateY(0)}}
+    .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+    .reveal.in{opacity:1;transform:translateY(0)}
+
+    /* ═══════════════════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════════════════ */
+    @media(max-width:1024px){
+      .feat-row{grid-template-columns:1fr 1fr}
+      .campus-layout{grid-template-columns:1fr}
+      .campus-cell.tall img{min-height:280px}
+    }
+    @media(max-width:900px){
+      .about-grid,.adm-grid,.contact-layout{grid-template-columns:1fr}
+      .news-layout{grid-template-columns:1fr}
+      .foot-grid{grid-template-columns:1fr 1fr}
+      .hero-grid{grid-template-rows:180px 160px}
+      .nav-links,.portal-btn{display:none}
+      .hamburger{display:flex}
+    }
+    @media(max-width:600px){
+      .feat-row{grid-template-columns:1fr}
+      .gal-grid{grid-template-columns:repeat(2,1fr);grid-template-rows:repeat(3,150px)}
+      .gal-item:nth-child(1){grid-column:span 2;grid-row:span 1}
+      .gal-item:nth-child(4){grid-column:span 1}
+      .foot-grid{grid-template-columns:1fr}
+      .fg-row{grid-template-columns:1fr}
+      .about-badge{right:0;bottom:-14px}
+      .hero-tagline{font-size:22px}
+    }
+  </style>
+</head>
+<body>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/256705687366?text=Hello%20Devine%20Secondary%20School%2C%20I%20have%20an%20enquiry." target="_blank" class="wa-float" title="Chat on WhatsApp">💬</a>
+
+<!-- MODAL -->
+<div class="modal-bg" id="modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-icon">✅</div>
+    <h3>Application Received!</h3>
+    <p>Thank you for applying to Devine Secondary School. Our admissions team will contact you within 2 business days via WhatsApp or phone.</p>
+    <a href="https://wa.me/256703652845?text=Hello%2C%20I%20submitted%20an%20application%20for%20Devine%20Secondary%20School" target="_blank"
+       style="display:inline-block;margin-top:22px;background:#25D366;color:#fff;padding:12px 26px;border-radius:8px;text-decoration:none;font-weight:700;font-size:14px;">
+      💬 Chat with Admissions
+    </a>
+  </div>
+</div>
+
+<!-- ══════════════════════ NAVBAR ══════════════════════ -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">
+    <!-- SVG Shield Crest -->
+    <svg class="nav-crest" viewBox="0 0 48 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M24 2L4 10v16c0 12 8.5 22.5 20 26 11.5-3.5 20-14 20-26V10L24 2z" fill="#1b4332" stroke="#c9a035" stroke-width="2"/>
+      <circle cx="24" cy="22" r="9" fill="none" stroke="#c9a035" stroke-width="1.5"/>
+      <path d="M20 22l3 3 6-6" stroke="#c9a035" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="24" y="38" text-anchor="middle" fill="#c9a035" font-size="7" font-family="serif" font-weight="bold">OCANDA</text>
+    </svg>
+    <div class="nav-title">
+      <strong>DEVINE SS</strong>
+      <small>Kitala · Entebbe · Uganda</small>
+    </div>
+  </a>
+
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#about">About Us</a></li>
+    <li><a href="#programs">Academics</a></li>
+    <li><a href="#admissions">Admissions</a></li>
+    <li><a href="#gallery">Student Life</a></li>
+    <li><a href="#news">News &amp; Events</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+
+  <a href="#admissions" class="portal-btn" id="portalBtn">
+    <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a3 3 0 100 6 3 3 0 000-6zM2 12a6 6 0 0112 0v1H2v-1z"/></svg>
+    PORTAL LOGIN
+  </a>
+
+  <button class="hamburger" id="ham" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ══════════════════════ HERO ══════════════════════ -->
+<section id="hero">
+  <div class="hero-grid">
+    <!-- Row 1: Science Lab | Students with laptops | Graduation -->
+    <div class="hc">
+      <img data-slot="hero1" id="img-hero1" src="https://images.unsplash.com/photo-1562774053-701939374585?w=600&q=80&fit=crop" alt="Students in science lab" loading="eager"/>
+      <span class="hc-lbl">Science Lab</span>
+    </div>
+    <div class="hc">
+      <img data-slot="hero2" id="img-hero2" src="https://images.unsplash.com/photo-1588072432836-e10032774350?w=600&q=80&fit=crop" alt="Students with laptops" loading="eager"/>
+      <span class="hc-lbl">ICT &amp; Computing</span>
+    </div>
+    <div class="hc">
+      <img data-slot="hero3" id="img-hero3" src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600&q=80&fit=crop" alt="Graduation ceremony" loading="eager"/>
+      <span class="hc-lbl">Graduation</span>
+    </div>
+    <!-- Row 2: Classroom | Basketball | Graduates -->
+    <div class="hc">
+      <img data-slot="hero4" id="img-hero4" src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=600&q=80&fit=crop" alt="Classroom" loading="eager"/>
+      <span class="hc-lbl">Classrooms</span>
+    </div>
+    <div class="hc">
+      <img data-slot="hero5" id="img-hero5" src="https://images.unsplash.com/photo-1546519638-68e109498ffc?w=600&q=80&fit=crop" alt="Basketball" loading="eager"/>
+      <span class="hc-lbl">Sports &amp; Arts</span>
+    </div>
+    <div class="hc">
+      <img data-slot="hero6" id="img-hero6" src="https://images.unsplash.com/photo-1627556704302-624286467c65?w=600&q=80&fit=crop" alt="Graduates" loading="eager"/>
+      <span class="hc-lbl">Alumni</span>
+    </div>
+  </div>
+  <div class="hero-text">
+    <div class="hero-tagline">Nurturing Excellence,<br>Inspiring Innovation</div>
+  </div>
+</section>
+
+<!-- ══════════════════════ TICKER ══════════════════════ -->
+<div class="ticker-bar">
+  <div class="ticker-inner">
+    <span>Admissions Open for 2025/26 Academic Year</span>
+    <span>UNEB Centre No. U2911 — Nationally Registered School</span>
+    <span>O-Level &amp; A-Level · Day &amp; Boarding</span>
+    <span>Director: +256 705 687 366 · Admissions: +256 703 652 845</span>
+    <span>Kitala, Broadway–Entebbe Road, Uganda</span>
+    <span>Founded 2004 · Christian Values · Academic Excellence</span>
+    <span>Admissions Open for 2025/26 Academic Year</span>
+    <span>UNEB Centre No. U2911 — Nationally Registered School</span>
+    <span>O-Level &amp; A-Level · Day &amp; Boarding</span>
+    <span>Director: +256 705 687 366 · Admissions: +256 703 652 845</span>
+    <span>Kitala, Broadway–Entebbe Road, Uganda</span>
+    <span>Founded 2004 · Christian Values · Academic Excellence</span>
+  </div>
+</div>
+
+<!-- ══════════════════════ FEATURE CARDS ══════════════════════ -->
+<section id="highlights">
+  <div class="feat-row">
+
+    <div class="feat-card reveal" onclick="scrollTo('about')">
+      <div class="feat-thumb">
+        <img data-slot="feat1" id="img-feat1" src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=400&q=80&fit=crop" alt="Academic Pathway"/>
+        <div class="feat-badge">🔭</div>
+      </div>
+      <div class="feat-body">
+        <h3>Academic Pathway</h3>
+        <p>Vision, Mission, Leadership</p>
+      </div>
+    </div>
+
+    <div class="feat-card reveal" onclick="scrollTo('programs')">
+      <div class="feat-thumb">
+        <img data-slot="feat2" id="img-feat2" src="https://images.unsplash.com/photo-1581093804475-577d72e35323?w=400&q=80&fit=crop" alt="Vocational Studies"/>
+        <div class="feat-badge">🔧</div>
+      </div>
+      <div class="feat-body">
+        <h3>Vocational Studies</h3>
+        <p>Computer Numerical Control (CNC), Modern Workshops</p>
+      </div>
+    </div>
+
+    <div class="feat-card reveal" onclick="scrollTo('gallery')">
+      <div class="feat-thumb">
+        <img data-slot="feat3" id="img-feat3" src="https://images.unsplash.com/photo-1541252260730-0412e8e2108e?w=400&q=80&fit=crop" alt="Sports and Arts"/>
+        <div class="feat-badge">📋</div>
+      </div>
+      <div class="feat-body">
+        <h3>Sports &amp; Arts</h3>
+        <p>Basketball, Soccer, Music Production</p>
+      </div>
+    </div>
+
+    <div class="feat-card reveal" onclick="scrollTo('news')">
+      <div class="feat-thumb" style="display:grid;grid-template-columns:1fr 1fr 1fr;grid-template-rows:1fr 1fr;gap:3px;background:#1a2d45;">
+        <img data-slot="feat4a" id="img-feat4a" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&q=70&fit=crop&crop=face" alt="Alumni 1" style="width:100%;height:100%;object-fit:cover;"/>
+        <img data-slot="feat4b" id="img-feat4b" src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=120&q=70&fit=crop&crop=face" alt="Alumni 2" style="width:100%;height:100%;object-fit:cover;"/>
+        <img data-slot="feat4c" id="img-feat4c" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=120&q=70&fit=crop&crop=face" alt="Alumni 3" style="width:100%;height:100%;object-fit:cover;"/>
+        <img data-slot="feat4d" id="img-feat4d" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=120&q=70&fit=crop&crop=face" alt="Alumni 4" style="width:100%;height:100%;object-fit:cover;"/>
+        <img data-slot="feat4e" id="img-feat4e" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=120&q=70&fit=crop&crop=face" alt="Alumni 5" style="width:100%;height:100%;object-fit:cover;"/>
+        <img data-slot="feat4f" id="img-feat4f" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=120&q=70&fit=crop&crop=face" alt="Alumni 6" style="width:100%;height:100%;object-fit:cover;"/>
+        <div class="feat-badge" style="position:absolute;bottom:-15px;">🌟</div>
+      </div>
+      <div class="feat-body">
+        <h3>Alumni &amp; Success Stories</h3>
+        <p>Profiles with successful graduates</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════ CTA BUTTONS ══════════════════════ -->
+<div class="cta-row" id="admissions-top">
+  <a href="#admissions" class="btn-apply">START YOUR APPLICATION</a>
+  <a href="https://wa.me/256703652845?text=Hello%2C%20I%20would%20like%20to%20schedule%20a%20school%20tour%20at%20Devine%20Secondary%20School%20Kitala%2C%20Entebbe" target="_blank" class="btn-tour">SCHEDULE A TOUR</a>
+</div>
+
+<!-- ══════════════════════ CAMPUS HIGHLIGHTS ══════════════════════ -->
+<section id="campus">
+  <h2 class="campus-heading">Kitala, Entebbe Campus Highlights</h2>
+  <div class="campus-layout">
+    <div class="campus-cell tall reveal">
+      <img data-slot="campus1" id="img-campus1" src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=800&q=80&fit=crop" alt="Aerial View Campus"/>
+      <div class="cam-cap">Devine Secondary School — Kitala, Entebbe Campus</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:14px;">
+      <div class="campus-cell reveal">
+        <img data-slot="campus2" id="img-campus2" src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=600&q=80&fit=crop" alt="School Library"/>
+        <div class="cam-cap">School Library</div>
+      </div>
+      <div class="campus-sub-row">
+        <div class="campus-cell reveal">
+          <img data-slot="campus3" id="img-campus3" src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=400&q=80&fit=crop" alt="Classrooms"/>
+          <div class="cam-cap">Classrooms</div>
+        </div>
+        <div class="campus-cell reveal">
+          <img data-slot="campus4" id="img-campus4" src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400&q=80&fit=crop" alt="Computer Lab"/>
+          <div class="cam-cap">Computer Lab</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ ABOUT ══════════════════════ -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-img-wrap reveal">
+      <img data-slot="about" id="img-about" src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=700&q=80&fit=crop" alt="Devine Secondary School students"/>
+      <div class="about-badge">
+        <strong>2004</strong>
+        <span>Est. Year</span>
+      </div>
+    </div>
+    <div class="reveal">
+      <div class="section-label">Our Story</div>
+      <h2 class="section-title">Founded on Faith &amp;<br>Academic Excellence</h2>
+      <p class="section-sub">Devine Secondary School is a private O and A-Level, mixed, day and boarding school located along Entebbe Road via Broadway–Kitala. Founded on 19th February 2004 by Mr. and Mrs. Tabaro, the school was built on Christian values to empower the next generation.</p>
+      <p class="section-sub" style="margin-top:14px">Nationally registered with UNEB Centre No. U2911, we offer the new Ugandan lower secondary curriculum and the British curriculum at A-Level, preparing students for university, career, and life in service to God and community.</p>
+      <div class="values-grid">
+        <div class="val-item"><span>🎓</span><span>O &amp; A Level</span></div>
+        <div class="val-item"><span>⛪</span><span>Christian Values</span></div>
+        <div class="val-item"><span>🏆</span><span>Sports Excellence</span></div>
+        <div class="val-item"><span>🎨</span><span>Arts &amp; Culture</span></div>
+        <div class="val-item"><span>💻</span><span>STEM Focus</span></div>
+        <div class="val-item"><span>🤝</span><span>Boarding &amp; Day</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ PROGRAMS ══════════════════════ -->
+<section id="programs">
+  <div class="reveal">
+    <div class="section-label">What We Offer</div>
+    <h2 class="section-title">Academic Programs</h2>
+    <p class="section-sub">From S.1 through S.6, our curriculum stretches every student to their fullest potential — in academics, faith, and character.</p>
+  </div>
+  <div class="prog-grid">
+    <div class="prog-card reveal">
+      <div class="prog-head">
+        <div class="prog-icon">📚</div>
+        <div><h3>Sciences &amp; Mathematics</h3><small>S.1 – S.6</small></div>
+      </div>
+      <div class="prog-body">
+        <p>Biology, Chemistry, Physics, and Mathematics taught with inquiry-based methods. Cambridge A-Level and UNEB tracks available for high achievers.</p>
+        <div class="tags"><span class="tag">Physics</span><span class="tag">Chemistry</span><span class="tag">Biology</span><span class="tag">Mathematics</span></div>
+      </div>
+    </div>
+    <div class="prog-card reveal">
+      <div class="prog-head">
+        <div class="prog-icon">💻</div>
+        <div><h3>ICT &amp; Computing</h3><small>S.1 – S.6</small></div>
+      </div>
+      <div class="prog-body">
+        <p>Fully equipped computer lab with coding, digital literacy, and web design aligned to 21st-century skills. Students build real-world projects.</p>
+        <div class="tags"><span class="tag">Coding</span><span class="tag">Digital Lit.</span><span class="tag">ICT</span></div>
+      </div>
+    </div>
+    <div class="prog-card reveal">
+      <div class="prog-head">
+        <div class="prog-icon">🌐</div>
+        <div><h3>Humanities &amp; Languages</h3><small>S.1 – S.6</small></div>
+      </div>
+      <div class="prog-body">
+        <p>History, Political Studies, Geography, English Literature, Luganda, Economics, and Entrepreneurship taught with critical thinking emphasis.</p>
+        <div class="tags"><span class="tag">English Lit.</span><span class="tag">History</span><span class="tag">Luganda</span><span class="tag">Economics</span></div>
+      </div>
+    </div>
+    <div class="prog-card reveal">
+      <div class="prog-head">
+        <div class="prog-icon">🎨</div>
+        <div><h3>Art, Design &amp; Music</h3><small>S.1 – S.4</small></div>
+      </div>
+      <div class="prog-body">
+        <p>Visual Arts, Art &amp; Design, and Music offered as academic subjects and extracurricular clubs. Annual cultural gala showcases student talent.</p>
+        <div class="tags"><span class="tag">Visual Art</span><span class="tag">Music</span><span class="tag">Design</span></div>
+      </div>
+    </div>
+    <div class="prog-card reveal">
+      <div class="prog-head">
+        <div class="prog-icon">⚽</div>
+        <div><h3>Sports &amp; Physical Ed.</h3><small>All Classes</small></div>
+      </div>
+      <div class="prog-body">
+        <p>Football, basketball, netball, volleyball, athletics, and indoor games. Competitive teams represent at district and national level annually.</p>
+        <div class="tags"><span class="tag">Football</span><span class="tag">Netball</span><span class="tag">Basketball</span><span class="tag">Athletics</span></div>
+      </div>
+    </div>
+    <div class="prog-card reveal">
+      <div class="prog-head">
+        <div class="prog-icon">🙏</div>
+        <div><h3>Christian Religious Ed.</h3><small>S.1 – S.6</small></div>
+      </div>
+      <div class="prog-body">
+        <p>Values-based CRE embedded in school culture. Scripture Union, Chapel sessions, Patriotism Club, Girls' Club, Writers &amp; Debaters Club.</p>
+        <div class="tags"><span class="tag">CRE</span><span class="tag">Chapel</span><span class="tag">Scripture Union</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ WHY DEVINE ══════════════════════ -->
+<section id="why">
+  <div class="reveal">
+    <div class="section-label" style="color:var(--gold-lt)">Why Choose Us</div>
+    <h2 class="section-title">The Devine Difference</h2>
+    <p class="section-sub">We invest in every student — academically, spiritually, physically, and socially.</p>
+  </div>
+  <div class="why-grid">
+    <div class="why-card reveal">
+      <div class="why-num">01</div>
+      <h3>Christian Foundation</h3>
+      <p>Our faith-centred environment shapes students into responsible, compassionate leaders ready to serve God and the community. (2 Tim 2:2)</p>
+    </div>
+    <div class="why-card reveal">
+      <div class="why-num">02</div>
+      <h3>British &amp; Ugandan Curriculum</h3>
+      <p>We offer both the new Ugandan curriculum at O-Level and the British curriculum at A-Level, preparing students for local and international universities.</p>
+    </div>
+    <div class="why-card reveal">
+      <div class="why-num">03</div>
+      <h3>Day &amp; Boarding Facilities</h3>
+      <p>Flexible enrolment options with safe, well-supervised boarding facilities. 24-hour security and qualified staff ensure student wellbeing.</p>
+    </div>
+    <div class="why-card reveal">
+      <div class="why-num">04</div>
+      <h3>Holistic Development</h3>
+      <p>Beyond academics — sports, arts, clubs, and community service activities foster creativity, teamwork, and leadership in every student.</p>
+    </div>
+    <div class="why-card reveal">
+      <div class="why-num">05</div>
+      <h3>Experienced Staff</h3>
+      <p>Qualified, passionate teachers recruited by ESC. Our educators combine deep subject knowledge with genuine care for student success.</p>
+    </div>
+    <div class="why-card reveal">
+      <div class="why-num">06</div>
+      <h3>Entebbe Location</h3>
+      <p>Located along Entebbe Road via Broadway–Kitala — easily accessible by public transport, in a quiet, safe environment conducive to learning.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ ADMISSIONS ══════════════════════ -->
+<section id="admissions">
+  <div class="reveal">
+    <div class="section-label">Join Devine</div>
+    <h2 class="section-title">Admissions 2025/26</h2>
+    <p class="section-sub">Applications are now open. Secure your child's place at Devine Secondary School, Kitala–Entebbe.</p>
+  </div>
+  <div class="adm-grid">
+    <div class="steps reveal">
+      <div class="step">
+        <div class="step-n">1</div>
+        <div>
+          <h4>Submit Application</h4>
+          <p>Complete the online form or visit the school at Kitala–Broadway, Entebbe Road. No application fee required.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">2</div>
+        <div>
+          <h4>Provide Required Documents</h4>
+          <p>P.L.E results (S.1 entry), O-Level results (S.5 entry), birth certificate, passport photos, and most recent school reports.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">3</div>
+        <div>
+          <h4>Entrance Assessment</h4>
+          <p>Shortlisted applicants sit a brief entrance test in English and Mathematics. Results released within 5 working days.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">4</div>
+        <div>
+          <h4>Offer &amp; Acceptance</h4>
+          <p>Successful applicants receive an offer letter. Confirmed upon payment of registration fee and submission of fee structure documents.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">5</div>
+        <div>
+          <h4>Welcome to Devine!</h4>
+          <p>Orientation day held before term. Parents meet teachers, collect timetables, school uniform requirements and term calendar.</p>
+        </div>
+      </div>
+      <a href="https://wa.me/256703652845?text=Hello%2C%20I%20want%20to%20enquire%20about%20admissions%20at%20Devine%20Secondary%20School%2C%20Kitala%20Entebbe"
+         target="_blank"
+         style="display:inline-flex;align-items:center;gap:10px;margin-top:28px;background:#25D366;color:#fff;padding:13px 26px;border-radius:10px;text-decoration:none;font-weight:700;font-size:14.5px;">
+        💬 WhatsApp Admissions Team
+      </a>
+    </div>
+    <div class="adm-form reveal">
+      <h3>Request Information</h3>
+      <div class="fg">
+        <label>Parent / Guardian Name</label>
+        <input type="text" placeholder="Full name" id="f-parent"/>
+      </div>
+      <div class="fg-row">
+        <div class="fg">
+          <label>Student Name</label>
+          <input type="text" placeholder="First &amp; surname" id="f-student"/>
+        </div>
+        <div class="fg">
+          <label>Applying For</label>
+          <select id="f-grade">
+            <option>S.1 (O-Level Entry)</option>
+            <option>S.2</option>
+            <option>S.3</option>
+            <option>S.4</option>
+            <option>S.5 (A-Level Entry)</option>
+            <option>S.6</option>
+          </select>
+        </div>
+      </div>
+      <div class="fg">
+        <label>WhatsApp Number</label>
+        <input type="tel" placeholder="+256 7XX XXX XXX" id="f-phone"/>
+      </div>
+      <div class="fg">
+        <label>Email Address</label>
+        <input type="email" placeholder="your@email.com" id="f-email"/>
+      </div>
+      <div class="fg">
+        <label>Message / Questions</label>
+        <textarea placeholder="Questions about admissions, boarding, fees, curriculum..." id="f-msg"></textarea>
+      </div>
+      <button class="submit-btn" onclick="submitForm()">Submit Application Enquiry</button>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ GALLERY ══════════════════════ -->
+<section id="gallery">
+  <div class="reveal" style="margin-bottom:0">
+    <div class="section-label">School Life</div>
+    <h2 class="section-title">Life at Devine</h2>
+    <p class="section-sub">A glimpse into the vibrant community that makes Devine Secondary School special.</p>
+  </div>
+  <div class="gal-grid">
+    <div class="gal-item reveal">
+      <img data-slot="gal1" id="img-gal1" src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=800&q=80&fit=crop" alt="Main School Block"/>
+      <div class="gal-overlay"><span>Main School Building</span></div>
+    </div>
+    <div class="gal-item reveal">
+      <img data-slot="gal2" id="img-gal2" src="https://images.unsplash.com/photo-1546519638-68e109498ffc?w=400&q=80&fit=crop" alt="Sports Fields"/>
+      <div class="gal-overlay"><span>Sports Fields</span></div>
+    </div>
+    <div class="gal-item reveal">
+      <img data-slot="gal3" id="img-gal3" src="https://images.unsplash.com/photo-1562774053-701939374585?w=400&q=80&fit=crop" alt="Science Laboratory"/>
+      <div class="gal-overlay"><span>Science Laboratory</span></div>
+    </div>
+    <div class="gal-item reveal">
+      <img data-slot="campus4_b" id="img-campus4_b" src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&q=80&fit=crop" alt="Computer Lab"/>
+      <div class="gal-overlay"><span>Computer Lab</span></div>
+    </div>
+    <div class="gal-item reveal">
+      <img data-slot="campus2_b" id="img-campus2_b" src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=400&q=80&fit=crop" alt="School Library"/>
+      <div class="gal-overlay"><span>School Library</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ NEWS ══════════════════════ -->
+<section id="news">
+  <div class="reveal">
+    <div class="section-label">Latest From School</div>
+    <h2 class="section-title">News &amp; Announcements</h2>
+  </div>
+  <div class="news-layout">
+    <div class="news-feat reveal">
+      <img data-slot="news" id="img-news" src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800&q=80&fit=crop" alt="Graduation"/>
+      <div class="news-feat-body">
+        <div class="news-date">March 2025</div>
+        <h2>Class of 2024 Achieves Outstanding UACE Results</h2>
+        <p>Devine Secondary School S.6 graduates recorded excellent results in the Uganda Advanced Certificate of Education examinations. Over 85% of candidates met university entry requirements.</p>
+        <a href="https://wa.me/256705687366" target="_blank" class="news-more">Enquire for Details →</a>
+      </div>
+    </div>
+    <div class="news-side">
+      <div class="news-card reveal" onclick="window.open('https://wa.me/256703652845?text=Tell me about 2025/26 admissions')">
+        <div class="news-date">April 2025</div>
+        <h4>2025/26 Admissions Now Open</h4>
+        <p>Applications for S.1, S.5 and S.6 intake are open. Contact admissions office or WhatsApp to start.</p>
+      </div>
+      <div class="news-card reveal">
+        <div class="news-date">March 2025</div>
+        <h4>New Computer Lab Officially Open</h4>
+        <p>Brand new fully equipped ICT lab launched. Students now have full access to modern computing resources.</p>
+      </div>
+      <div class="news-card reveal">
+        <div class="news-date">February 2025</div>
+        <h4>Annual Sports Day — All Parents Welcome</h4>
+        <p>Kitala campus hosts its annual Inter-House Sports Day. Food stalls, competitions, prize-giving ceremony.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ CONTACT + REAL MAP ══════════════════════ -->
+<section id="contact">
+  <div class="reveal">
+    <div class="section-label" style="color:var(--gold-lt)">Get In Touch</div>
+    <h2 class="section-title">Contact Devine<br>Secondary School</h2>
+    <p class="section-sub">We are here to answer your questions about admissions, fees, curriculum, and boarding.</p>
+  </div>
+  <div class="contact-layout">
+    <div class="reveal">
+      <div class="contact-items">
+        <div class="c-item">
+          <div class="c-icon">📍</div>
+          <div>
+            <h4>Address</h4>
+            <p>Kitala Bukandekande, Entebbe Road<br>off Broadway – Kitala, Entebbe<br>P.O. Box 55, Abaita Ababiri, Uganda</p>
+          </div>
+        </div>
+        <div class="c-item">
+          <div class="c-icon">📞</div>
+          <div>
+            <h4>Phone</h4>
+            <p><a href="tel:+256705687366">+256 705 687 366</a> — Director's Office<br><a href="tel:+256703652845">+256 703 652 845</a> — Admissions</p>
+          </div>
+        </div>
+        <div class="c-item">
+          <div class="c-icon">✉️</div>
+          <div>
+            <h4>Website</h4>
+            <p><a href="https://www.divinesecondaryschool.com" target="_blank">www.divinesecondaryschool.com</a></p>
+          </div>
+        </div>
+        <div class="c-item">
+          <div class="c-icon">🕘</div>
+          <div>
+            <h4>Office Hours</h4>
+            <p>Monday – Friday: 7:30 AM – 5:00 PM<br>Saturday: 8:00 AM – 12:00 PM</p>
+          </div>
+        </div>
+        <div class="c-item">
+          <div class="c-icon">🛣️</div>
+          <div>
+            <h4>Directions</h4>
+            <p>200m from Entebbe Highway Express<br>before Abaita Ababiri. Via Broadway–Kitala.</p>
+          </div>
+        </div>
+      </div>
+      <a href="https://wa.me/256703652845?text=Hello%20Devine%20Secondary%20School%2C%20I%20have%20an%20enquiry%20from%20your%20website."
+         target="_blank" class="wa-card">
+        <div class="wa-icon">💬</div>
+        <div class="wa-text">
+          <h4>Chat With Us on WhatsApp</h4>
+          <p>Quick replies · Mon–Sat · 7AM–5PM</p>
+          <strong>+256 703 652 845</strong>
+        </div>
+      </a>
+    </div>
+
+    <!-- REAL GOOGLE MAPS — Devine Secondary School Kitala Entebbe -->
+    <div class="map-wrap reveal">
+      <iframe
+        title="Devine Secondary School Location — Kitala, Entebbe, Uganda"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.4890576!2d32.4478!3d0.0542!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x177d9e3e0e0e0e0f%3A0x1!2sDivine+Secondary+School%2C+Kitala%2C+Entebbe%2C+Uganda!5e0!3m2!1sen!2sug!4v1700000000000!5m2!1sen!2sug"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+      <div class="map-footer">
+        <span>📍</span>
+        <span>
+          <strong style="color:rgba(255,255,255,.75)">Devine Secondary School</strong><br>
+          Kitala–Broadway, Entebbe Road, Uganda ·
+          <a href="https://maps.google.com/?q=Divine+Secondary+School+Kitala+Entebbe+Uganda" target="_blank" style="color:var(--gold);font-size:12px">Open in Google Maps ↗</a>
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ FOOTER ══════════════════════ -->
+<footer>
+  <div class="foot-grid">
+    <div class="foot-brand">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <svg width="42" height="46" viewBox="0 0 48 52" fill="none">
+          <path d="M24 2L4 10v16c0 12 8.5 22.5 20 26 11.5-3.5 20-14 20-26V10L24 2z" fill="#1b4332" stroke="#c9a035" stroke-width="2"/>
+          <circle cx="24" cy="22" r="9" fill="none" stroke="#c9a035" stroke-width="1.5"/>
+          <path d="M20 22l3 3 6-6" stroke="#c9a035" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span style="font-family:'Playfair Display',serif;color:var(--white);font-size:15px;font-weight:700">Devine Secondary School</span>
+      </div>
+      <p>Nurturing morally, spiritually and academically equipped young people to serve God and society since 2004. Kitala–Entebbe, Uganda.</p>
+      <div class="foot-socials">
+        <a href="https://www.facebook.com/p/Divine-Secondary-School-Entebbe-Kitala-100070014615336/" target="_blank" class="soc-btn" title="Facebook">f</a>
+        <a href="https://www.instagram.com/divinesecondaryschool/" target="_blank" class="soc-btn" title="Instagram">📸</a>
+        <a href="https://wa.me/256703652845" target="_blank" class="soc-btn" title="WhatsApp">💬</a>
+        <a href="https://www.tiktok.com/discover/divine-secondary-school-entebbe" target="_blank" class="soc-btn" title="TikTok">▶</a>
+      </div>
+    </div>
+    <div class="foot-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#programs">Programs</a></li>
+        <li><a href="#admissions">Admissions</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#news">News &amp; Events</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h4>Academics</h4>
+      <ul>
+        <li><a href="#programs">O-Level (S.1–S.4)</a></li>
+        <li><a href="#programs">A-Level (S.5–S.6)</a></li>
+        <li><a href="#programs">Sciences &amp; Maths</a></li>
+        <li><a href="#programs">Humanities</a></li>
+        <li><a href="#programs">ICT &amp; Computing</a></li>
+        <li><a href="https://cdn.prod.website-files.com/678e506674fb6964b701832f/67b2f1d16af34e71b39b8989_FEES%20STRUCTURE_O%20%26%20A-LEVEL.pdf" target="_blank">Fees Structure</a></li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="tel:+256705687366">📞 +256 705 687 366</a></li>
+        <li><a href="tel:+256703652845">📞 +256 703 652 845</a></li>
+        <li><a href="https://wa.me/256703652845" target="_blank">💬 WhatsApp Admissions</a></li>
+        <li><a href="https://www.divinesecondaryschool.com" target="_blank">🌐 Website</a></li>
+        <li><a href="https://maps.google.com/?q=Divine+Secondary+School+Kitala+Entebbe" target="_blank">📍 Kitala–Entebbe</a></li>
+        <li><a href="#admissions">Apply Online</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <p>© 2025 Devine Secondary School — Kitala, Entebbe, Uganda. UNEB Centre No. U2911. All rights reserved.</p>
+    <p style="color:rgba(255,255,255,.18)">Excellence · Integrity · Faith · www.devinimos.com</p>
+  </div>
+</footer>
+
+<script>
+/* ── Scroll Reveal ── */
+const reveals = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('in'), i * 75);
+    }
+  });
+}, { threshold: 0.08 });
+reveals.forEach(r => io.observe(r));
+
+/* ── Nav shadow on scroll ── */
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').style.boxShadow =
+    window.scrollY > 50 ? '0 4px 30px rgba(0,0,0,.5)' : 'none';
+});
+
+/* ── Smooth scroll helper ── */
+function scrollTo(id) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth' });
+}
+
+/* ── Mobile menu ── */
+let menuOpen = false;
+function toggleMenu() {
+  menuOpen = !menuOpen;
+  const links = document.getElementById('navLinks');
+  const btn   = document.getElementById('portalBtn');
+  const ham   = document.getElementById('ham');
+  if (menuOpen) {
+    links.style.cssText = 'display:flex;flex-direction:column;position:fixed;top:70px;left:0;right:0;background:rgba(13,31,60,.99);padding:28px 5%;gap:20px;z-index:999;border-top:1px solid rgba(201,160,53,.15);';
+    btn.style.cssText   = 'display:flex;position:fixed;bottom:20px;left:5%;right:5%;justify-content:center;z-index:999;text-align:center;';
+    ham.children[0].style.transform = 'rotate(45deg) translate(5px,5px)';
+    ham.children[1].style.opacity = '0';
+    ham.children[2].style.transform = 'rotate(-45deg) translate(5px,-5px)';
+  } else {
+    links.style.cssText = '';
+    btn.style.cssText   = '';
+    ham.children[0].style.transform = '';
+    ham.children[1].style.opacity = '';
+    ham.children[2].style.transform = '';
+  }
+}
+
+/* ── Close menu on link click ── */
+document.querySelectorAll('.nav-links a').forEach(a => {
+  a.addEventListener('click', () => { if (menuOpen) toggleMenu(); });
+});
+
+/* ── Smooth anchor scrolling ── */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+  });
+});
+
+/* ── Form submit ── */
+function submitForm() {
+  const parent = document.getElementById('f-parent').value.trim();
+  const phone  = document.getElementById('f-phone').value.trim();
+  if (!parent || !phone) {
+    alert('Please fill in your name and WhatsApp number before submitting.');
+    return;
+  }
+  // Show modal
+  document.getElementById('modal').classList.add('open');
+  // Also send to WhatsApp
+  const student = document.getElementById('f-student').value.trim();
+  const grade   = document.getElementById('f-grade').value;
+  const email   = document.getElementById('f-email').value.trim();
+  const msg     = document.getElementById('f-msg').value.trim();
+  const waMsg = encodeURIComponent(
+    `Hello Devine Secondary School,\n\nNew Application Enquiry:\nParent: ${parent}\nStudent: ${student}\nApplying For: ${grade}\nPhone: ${phone}\nEmail: ${email}\nMessage: ${msg}`
+  );
+  setTimeout(() => {
+    window.open(`https://wa.me/256703652845?text=${waMsg}`, '_blank');
+  }, 1200);
+}
+function closeModal() { document.getElementById('modal').classList.remove('open'); }
+document.getElementById('modal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+</script>
+
+<!-- ═══════════════ PHOTO EDITOR BAR ═══════════════ -->
+<style>
+/* ═══ PHOTO EDITOR TOOLBAR ═══ */
+#pe-bar{
+  position:fixed;bottom:0;left:0;right:0;z-index:9999;
+  background:rgba(13,31,60,.98);
+  border-top:2px solid #c9a035;
+  padding:0;
+  font-family:'DM Sans',sans-serif;
+  transform:translateY(calc(100% - 52px));
+  transition:transform .35s cubic-bezier(.4,0,.2,1);
+}
+#pe-bar.open{ transform:translateY(0); }
+#pe-toggle{
+  width:100%;height:52px;
+  background:none;border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  color:#e8c45a;font-size:14px;font-weight:800;letter-spacing:.5px;
+  font-family:'DM Sans',sans-serif;
+  border-bottom:1px solid rgba(201,160,53,.2);
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
+}
+#pe-toggle span.arrow{transition:transform .3s;display:inline-block}
+#pe-bar.open #pe-toggle span.arrow{transform:rotate(180deg)}
+#pe-body{
+  max-height:65vh;overflow-y:auto;-webkit-overflow-scrolling:touch;
+  padding:14px 12px 20px;
+}
+.pe-section-title{
+  font-size:10px;letter-spacing:2px;text-transform:uppercase;
+  color:#c9a035;font-weight:800;margin:14px 0 8px;
+  padding-left:2px;
+}
+.pe-section-title:first-child{margin-top:0}
+.pe-slots{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pe-slot{
+  background:rgba(255,255,255,.05);
+  border:1.5px solid rgba(255,255,255,.1);
+  border-radius:12px;overflow:hidden;
+  transition:border-color .2s;
+}
+.pe-slot.done{border-color:#c9a035}
+.pe-slot-preview{
+  width:100%;height:80px;object-fit:cover;display:block;
+  background:rgba(255,255,255,.07);
+}
+.pe-slot-preview.placeholder{
+  display:flex;align-items:center;justify-content:center;
+  font-size:28px;opacity:.35;height:80px;
+}
+.pe-slot-footer{
+  padding:8px 10px;
+  display:flex;align-items:center;justify-content:space-between;gap:6px;
+}
+.pe-slot-label{color:rgba(255,255,255,.8);font-size:11px;font-weight:700;flex:1;line-height:1.3}
+.pe-slot-label small{display:block;color:rgba(255,255,255,.35);font-size:10px;font-weight:400}
+.pe-btn{
+  background:#c9a035;color:#0d1f3c;
+  border:none;border-radius:8px;padding:8px 12px;
+  font-size:12px;font-weight:800;cursor:pointer;
+  font-family:'DM Sans',sans-serif;
+  white-space:nowrap;min-height:38px;
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
+  display:flex;align-items:center;gap:4px;
+}
+.pe-btn:active{opacity:.7}
+.pe-slot.done .pe-btn{background:#2d6a4f;color:#fff}
+#pe-save-wrap{padding:14px 12px;border-top:1px solid rgba(201,160,53,.15)}
+#pe-save{
+  width:100%;padding:15px;
+  background:linear-gradient(135deg,#c9a035,#e8c45a);
+  color:#0d1f3c;font-size:16px;font-weight:900;
+  border:none;border-radius:12px;cursor:pointer;
+  font-family:'DM Sans',sans-serif;
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
+  box-shadow:0 4px 20px rgba(201,160,53,.35);
+}
+#pe-save:active{opacity:.8}
+#pe-counter{
+  text-align:center;padding:6px;
+  font-size:12px;color:rgba(255,255,255,.4);
+}
+/* push page content above bar */
+body{ padding-bottom: 58px; }
+/* Toast */
+#pe-toast{
+  position:fixed;top:80px;left:50%;transform:translateX(-50%) translateY(-20px);
+  background:#0d1f3c;color:#fff;padding:11px 20px;border-radius:10px;
+  font-size:13.5px;font-weight:600;box-shadow:0 8px 24px rgba(0,0,0,.4);
+  opacity:0;transition:all .3s;z-index:99999;white-space:nowrap;
+  border:1px solid rgba(201,160,53,.4);font-family:'DM Sans',sans-serif;
+}
+#pe-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+/* wa-float lift */
+.wa-float{bottom:70px!important}
+</style>
+<div id="pe-toast"></div>
+<div id="pe-bar">
+  <button id="pe-toggle" onclick="peToggle()">
+    <span>📸</span>
+    <span>EDIT PHOTOS</span>
+    <span class="arrow">▲</span>
+    <span id="pe-pill" style="background:#c9a035;color:#0d1f3c;border-radius:20px;padding:3px 10px;font-size:11px;">0/19 done</span>
+  </button>
+  <div id="pe-body">
+    <div class="pe-section-title">Hero Collage</div><div class="pe-slots"><div class="pe-slot" id="pe-hero1">
+  <div class="pe-slot-preview placeholder" id="prev-hero1">🔬</div>
+  <div class="pe-slot-footer">
+    <div class="pe-slot-label">Science Lab<small id="status-hero1">Not set</small></div>
+    <button class="pe-btn" onclick="pePickPhoto('hero1')">📷</button>
+  </div>
+</div><div class="pe-slot" id="pe-hero2">
+  <div class="pe-slot-preview placeholder" id="prev-hero2">💻</div>
+  <div class="pe-slot-footer">
+    <div class="pe-slot-label">ICT & Computing<small id="status-hero2">Not set</small></div>
+    <button class="pe-btn" onclick="pePickPhoto('hero2')">📷</button>
+  </div>
+</div><div class="pe-slot" id="pe-hero3">
+  <div class="pe-slot-preview placeholder" id="prev-hero3">🎓</div>
+  <div class="pe-slot-footer">
+    <div class="pe-slot-label">Graduation<small id="status-hero3">Not set</small></div>
+    <button class="pe-btn" onclick="pePickPhoto('hero3')">📷</button>
+  </div>
+</div><div class="pe-slot" id="pe-hero4">
+  <div class="pe-slot-preview placeholder" id="prev-hero4">📖</div>
+  <div class="pe-slot-footer">
+    <div class="pe-slot-label">Classrooms<small id="status-hero4">Not set</small></div>
+    <button class="pe-btn" onclick="pePickPhoto('hero4')">📷</button>
+  </div>
+</div><div class="pe-slot" id="pe-hero5">
+  <div class="pe-slot-preview placeholder" id="prev-hero5">⚽</div>
+  <div class="pe-slot-footer">
+    <div class="pe-slot-label">Sports & Arts<small id="status-hero5">Not set</small></div>
+    <button class="pe-btn" onclick="pePickPhoto('hero5')">📷</button>
+  </div>
+</div><div class="pe-slot" id="pe-hero6">
+  <div class="pe-slot-preview placeholder" id="prev-hero6">🏆</div>
+  <div class="pe-slot-footer">
+    <div class="pe-slot-label">Alumni/Awards<small id="status-hero6">Not set</small></div>
+    <button class="pe-btn" onclick="pePickPhoto('hero6')">📷</button>
+  </div>
+</div></div><div class="pe-section-title">Feature Cards</div><div class="pe-slots"><div class="pe-slot" id="pe-feat1">
+  <div class="pe-slot-preview placeholder" id="prev-feat1">📚</div>
+  <div class="pe-slot-footer">
+    <div class="pe-slot-label">Academic Pathway<small id="status-feat1">Not set</small></div>
+    <button class="pe-btn" onclick="pePickPhoto('feat1')">📷</button>
+  </div>
+</div><div class="pe-slot" id="pe-feat2">
+  <div class="pe-slot-preview placeholder" id="prev-feat2">⚙️</div>
+  <div class="pe-slot-footer">
+    <div class="pe-slot-label">Vocational Studies<small id="status-feat2">Not set</small></div>
+    <button class="pe-btn" onclick="pePickPhoto('feat2')">📷</button>
+  </div>
+</div><div class="pe-slot" id="pe-feat3">
+  <div class="pe-slot-preview placeholder" id="prev-feat3">🏀</div>
+  <div class="pe-slot-footer">
+    <div class="pe-slot-label">Sports & Arts<small id="status-feat3">Not set</small></div>
+    <button class="pe-btn" onclick="pePickPhoto('feat3')">📷</button>
+  </div>
+</div><div class="pe-slot" id="pe-feat4a">
+  <div class="pe-slot-preview placeholder" id="prev-feat4a">👤</div>
+  <div class="pe-slot-footer">
+    <div class="pe-slot-label">Alumni Photo 1<small id="status-feat4a">Not set</small></div>
+    <button class="pe-btn" onclick="pePickPhoto('feat4a')">📷</button>
+  </div>
+</div></div><div class="pe-section-title">Campus Highlights</div><div class="pe-slots"><div class="pe-slot" id="pe-campus1">
+  <div class="pe-slot-preview placeholder" id="prev-campus1">🏫</div>
+  <div class="pe-slot-footer">
+    <div class="pe-slot-label">Campus Main View<small id="status-campus1">Not set</small></div>
+    <button class="pe-btn" onclick="pePickPhoto('campus1')">📷</button>
+  </div>
+</div><div class="pe-slot" id="pe-campus2">
+  <div class="pe-slot-preview placeholder" id="prev-campus2">📚</div>
+  <div class="pe-slot-footer">
+    <div class="pe-slot-label">School Library<small id="status-campus2">Not set</small></div>
+    <button class="pe-btn" onclick="pePickPhoto('campus2')">📷</button>
+  </div>
+</div><div class="pe-slot" id="pe-campus3">
+  <div class="pe-slot-preview placeholder" id="prev-campus3">🪑</div>
+  <div class="pe-slot-footer">
+    <div class="pe-slot-label">Classrooms<small id="status-campus3">Not set</small></div>
+    <button class="pe-btn" onclick="pePickPhoto('campus3')">📷</button>
+  </div>
+</div><div class="pe-slot" id="pe-campus4">
+  <div class="pe-slot-preview placeholder" id="prev-campus4">💻</div>
+  <div class="pe-slot-footer">
+    <div class="pe-slot-label">Computer Lab<small id="status-campus4">Not set</small></div>
+    <button class="pe-btn" onclick="pePickPhoto('campus4')">📷</button>
+  </div>
+</div></div><div class="pe-section-title">About & News</div><div class="pe-slots"><div class="pe-slot" id="pe-about">
+  <div class="pe-slot-preview placeholder" id="prev-about">👩‍🏫</div>
+  <div class="pe-slot-footer">
+    <div class="pe-slot-label">About Section<small id="status-about">Not set</small></div>
+    <button class="pe-btn" onclick="pePickPhoto('about')">📷</button>
+  </div>
+</div><div class="pe-slot" id="pe-news">
+  <div class="pe-slot-preview placeholder" id="prev-news">📰</div>
+  <div class="pe-slot-footer">
+    <div class="pe-slot-label">News Photo<small id="status-news">Not set</small></div>
+    <button class="pe-btn" onclick="pePickPhoto('news')">📷</button>
+  </div>
+</div></div><div class="pe-section-title">Gallery</div><div class="pe-slots"><div class="pe-slot" id="pe-gal1">
+  <div class="pe-slot-preview placeholder" id="prev-gal1">🖼️</div>
+  <div class="pe-slot-footer">
+    <div class="pe-slot-label">Gallery: Main<small id="status-gal1">Not set</small></div>
+    <button class="pe-btn" onclick="pePickPhoto('gal1')">📷</button>
+  </div>
+</div><div class="pe-slot" id="pe-gal2">
+  <div class="pe-slot-preview placeholder" id="prev-gal2">⚽</div>
+  <div class="pe-slot-footer">
+    <div class="pe-slot-label">Gallery: Sports<small id="status-gal2">Not set</small></div>
+    <button class="pe-btn" onclick="pePickPhoto('gal2')">📷</button>
+  </div>
+</div><div class="pe-slot" id="pe-gal3">
+  <div class="pe-slot-preview placeholder" id="prev-gal3">🔬</div>
+  <div class="pe-slot-footer">
+    <div class="pe-slot-label">Gallery: Lab<small id="status-gal3">Not set</small></div>
+    <button class="pe-btn" onclick="pePickPhoto('gal3')">📷</button>
+  </div>
+</div></div>
+    <div id="pe-save-wrap">
+      <div id="pe-counter">Add photos above, then save to GitHub or download</div>
+
+      <!-- GitHub Setup Panel -->
+      <div id="gh-setup" style="background:rgba(255,255,255,.06);border:1px solid rgba(201,160,53,.25);border-radius:14px;padding:16px;margin-bottom:14px;">
+        <div style="color:#e8c45a;font-size:12px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px;">⚙️ GitHub Settings</div>
+
+        <div style="margin-bottom:10px;">
+          <label style="color:rgba(255,255,255,.6);font-size:11px;font-weight:600;display:block;margin-bottom:4px;letter-spacing:.5px;">GITHUB USERNAME</label>
+          <input id="gh-user" type="text" placeholder="e.g. CMABOSSNATION" value="CMABOSSNATION"
+            style="width:100%;padding:10px 12px;border-radius:8px;border:1.5px solid rgba(201,160,53,.3);background:rgba(255,255,255,.08);color:#fff;font-size:14px;font-family:DM Sans,sans-serif;outline:none;"/>
+        </div>
+
+        <div style="margin-bottom:10px;">
+          <label style="color:rgba(255,255,255,.6);font-size:11px;font-weight:600;display:block;margin-bottom:4px;letter-spacing:.5px;">REPOSITORY NAME</label>
+          <input id="gh-repo" type="text" placeholder="e.g. devine-secondary-school-kitala-Entebbe--main"
+            value="devine-secondary-school-kitala-Entebbe--main"
+            style="width:100%;padding:10px 12px;border-radius:8px;border:1.5px solid rgba(201,160,53,.3);background:rgba(255,255,255,.08);color:#fff;font-size:14px;font-family:DM Sans,sans-serif;outline:none;"/>
+        </div>
+
+        <div style="margin-bottom:10px;">
+          <label style="color:rgba(255,255,255,.6);font-size:11px;font-weight:600;display:block;margin-bottom:4px;letter-spacing:.5px;">GITHUB TOKEN (PERSONAL ACCESS TOKEN)</label>
+          <input id="gh-token" type="password" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx"
+            style="width:100%;padding:10px 12px;border-radius:8px;border:1.5px solid rgba(201,160,53,.3);background:rgba(255,255,255,.08);color:#fff;font-size:14px;font-family:DM Sans,sans-serif;outline:none;"/>
+          <div style="color:rgba(255,255,255,.35);font-size:10.5px;margin-top:5px;line-height:1.5;">
+            Get token: GitHub → Settings → Developer settings → Personal access tokens → Fine-grained → New. Enable <strong style="color:rgba(201,160,53,.8)">Contents: Read & Write</strong>
+          </div>
+        </div>
+
+        <button onclick="ghTestConnection()" style="width:100%;padding:10px;background:rgba(201,160,53,.15);color:#e8c45a;border:1px solid rgba(201,160,53,.3);border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:DM Sans,sans-serif;margin-top:2px;-webkit-tap-highlight-color:transparent;touch-action:manipulation;">
+          🔗 Test Connection
+        </button>
+        <div id="gh-status" style="margin-top:8px;font-size:12px;text-align:center;color:rgba(255,255,255,.4);min-height:18px;"></div>
+      </div>
+
+      <!-- Action Buttons -->
+      <button id="pe-save-gh" onclick="peSaveToGitHub()"
+        style="width:100%;padding:15px;background:linear-gradient(135deg,#1b4332,#2d6a4f);color:#fff;font-size:15px;font-weight:900;border:none;border-radius:12px;cursor:pointer;font-family:DM Sans,sans-serif;display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:10px;box-shadow:0 4px 20px rgba(27,67,50,.5);-webkit-tap-highlight-color:transparent;touch-action:manipulation;">
+        <span>🚀</span><span>Save Photos to GitHub</span>
+      </button>
+
+      <button id="pe-save" onclick="peSaveDownload()"
+        style="width:100%;padding:13px;background:linear-gradient(135deg,#c9a035,#e8c45a);color:#0d1f3c;font-size:14px;font-weight:800;border:none;border-radius:12px;cursor:pointer;font-family:DM Sans,sans-serif;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 4px 16px rgba(201,160,53,.3);-webkit-tap-highlight-color:transparent;touch-action:manipulation;">
+        <span>⬇️</span><span>Download HTML File Instead</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══ PHOTO EDITOR ENGINE ═══
+const pePhotos = {};
+const peTotal = 19;
+const peSlots = ['hero1', 'hero2', 'hero3', 'hero4', 'hero5', 'hero6', 'feat1', 'feat2', 'feat3', 'feat4a', 'campus1', 'campus2', 'campus3', 'campus4', 'about', 'news', 'gal1', 'gal2', 'gal3'];
+
+function peToggle(){
+  document.getElementById('pe-bar').classList.toggle('open');
+}
+
+function peToast(msg){
+  const t=document.getElementById('pe-toast');
+  t.textContent=msg; t.classList.add('show');
+  clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove('show'),2400);
+}
+
+// Android-safe photo picker
+let peCurrentSlot=null;
+function pePickPhoto(slotId){
+  peCurrentSlot=slotId;
+  const old=document.getElementById('pe-file-input');
+  if(old) old.remove();
+  const inp=document.createElement('input');
+  inp.type='file'; inp.id='pe-file-input';
+  inp.accept='image/*';
+  inp.style.cssText='position:fixed;top:-9999px;left:-9999px;opacity:0;width:1px;height:1px;';
+  document.body.appendChild(inp);
+  inp.addEventListener('change', peHandleFile, {once:true});
+  setTimeout(()=>inp.click(), 80);
+}
+
+function peHandleFile(e){
+  const file = e.target.files && e.target.files[0];
+  if(!file){ peToast('No photo selected'); return; }
+  peToast('⏳ Loading photo...');
+  const reader=new FileReader();
+  reader.onload=function(ev){
+    const dataURL=ev.target.result;
+    pePhotos[peCurrentSlot]=dataURL;
+    peApplyToSite(peCurrentSlot, dataURL);
+    peApplyToEditor(peCurrentSlot, dataURL);
+    peUpdateCount();
+    peToast('✅ Photo updated!');
+  };
+  reader.onerror=function(){ peToast('❌ Error reading photo, try again'); };
+  reader.readAsDataURL(file);
+}
+
+function peApplyToSite(slotId, dataURL){
+  // Update ALL images with matching data-slot on the live page
+  document.querySelectorAll('[data-slot="'+slotId+'"]').forEach(img=>{
+    img.src=dataURL;
+  });
+}
+
+function peApplyToEditor(slotId, dataURL){
+  const prev=document.getElementById('prev-'+slotId);
+  const status=document.getElementById('status-'+slotId);
+  const slot=document.getElementById('pe-'+slotId);
+  if(prev){
+    prev.classList.remove('placeholder');
+    prev.style.backgroundImage='url('+dataURL+')';
+    prev.style.backgroundSize='cover';
+    prev.style.backgroundPosition='center';
+    prev.textContent='';
+  }
+  if(status) status.textContent='✓ Added';
+  if(slot) slot.classList.add('done');
+}
+
+function peUpdateCount(){
+  const done=Object.keys(pePhotos).length;
+  document.getElementById('pe-pill').textContent=done+'/'+peTotal+' done';
+  const counter=document.getElementById('pe-counter');
+  if(counter) counter.textContent=done===peTotal
+    ? '🎉 All photos added! Tap Save to download.'
+    : (peTotal-done)+' slots still using placeholders — you can still save';
+}
+
+// ─── SAVE: rebuild full HTML with real photos baked in ───
+// ─── GITHUB HELPERS ───────────────────────────────────────
+function ghBase(){
+  const user  = (document.getElementById('gh-user')||{value:''}).value.trim();
+  const repo  = (document.getElementById('gh-repo')||{value:''}).value.trim();
+  const token = (document.getElementById('gh-token')||{value:''}).value.trim();
+  return {user,repo,token};
+}
+
+function ghSetStatus(msg, color){
+  const el = document.getElementById('gh-status');
+  if(el){ el.textContent=msg; el.style.color=color||'rgba(255,255,255,.4)'; }
+}
+
+async function ghTestConnection(){
+  const {user,repo,token} = ghBase();
+  if(!user||!repo||!token){ ghSetStatus('⚠️ Fill in all three fields first','#e8c45a'); return; }
+  ghSetStatus('⏳ Testing connection...','#e8c45a');
+  try{
+    const r = await fetch(`https://api.github.com/repos/${user}/${repo}`,{
+      headers:{'Authorization':'token '+token,'Accept':'application/vnd.github.v3+json'}
+    });
+    if(r.ok){
+      const d = await r.json();
+      ghSetStatus('✅ Connected! Repo: '+d.full_name,'#4ade80');
+    } else {
+      const e = await r.json();
+      ghSetStatus('❌ '+( e.message||'Access denied — check token permissions'),'#f87171');
+    }
+  } catch(e){
+    ghSetStatus('❌ Network error: '+e.message,'#f87171');
+  }
+}
+
+// Get current SHA of a file in repo (needed for updating)
+async function ghGetSHA(user, repo, token, path){
+  try{
+    const r = await fetch(`https://api.github.com/repos/${user}/${repo}/contents/${path}`,{
+      headers:{'Authorization':'token '+token,'Accept':'application/vnd.github.v3+json'}
+    });
+    if(r.ok){ const d=await r.json(); return d.sha; }
+  } catch(e){}
+  return null;
+}
+
+// Upload a single file to GitHub
+async function ghUploadFile(user, repo, token, path, base64Content, message, sha){
+  const body = { message, content: base64Content };
+  if(sha) body.sha = sha;
+  const r = await fetch(`https://api.github.com/repos/${user}/${repo}/contents/${path}`,{
+    method:'PUT',
+    headers:{
+      'Authorization':'token '+token,
+      'Accept':'application/vnd.github.v3+json',
+      'Content-Type':'application/json'
+    },
+    body: JSON.stringify(body)
+  });
+  if(!r.ok){
+    const e = await r.json();
+    throw new Error(e.message || 'Upload failed for '+path);
+  }
+  return await r.json();
+}
+
+// Convert dataURL to pure base64
+function dataURLtoBase64(dataURL){
+  return dataURL.split(',')[1];
+}
+
+// ─── SAVE TO GITHUB ─────────────────────────────────────
+async function peSaveToGitHub(){
+  const {user,repo,token} = ghBase();
+  if(!user||!repo||!token){
+    peToast('⚠️ Fill in GitHub settings first!');
+    document.getElementById('pe-bar').classList.add('open');
+    return;
+  }
+
+  const done = Object.keys(pePhotos).length;
+  if(done === 0){ peToast('Add at least one photo first!'); return; }
+
+  const btn = document.getElementById('pe-save-gh');
+  btn.disabled=true;
+  btn.innerHTML='<span>⏳</span><span>Starting upload...</span>';
+
+  try{
+    const photoEntries = Object.entries(pePhotos);
+    let uploadedImages = 0;
+
+    // ── Step 1: Upload each image as a file to /images/ folder ──
+    for(let i=0; i<photoEntries.length; i++){
+      const [slotId, dataURL] = photoEntries[i];
+      const ext   = dataURL.startsWith('data:image/png') ? 'png' : 'jpg';
+      const path  = `images/${slotId}.${ext}`;
+      const b64   = dataURLtoBase64(dataURL);
+
+      btn.innerHTML=`<span>⬆️</span><span>Uploading image ${i+1}/${photoEntries.length}...</span>`;
+      ghSetStatus(`Uploading ${slotId}...`,'#e8c45a');
+
+      const sha = await ghGetSHA(user, repo, token, path);
+      await ghUploadFile(user, repo, token, path, b64,
+        `Add school photo: ${slotId}`, sha);
+
+      // Update the img src in live page to point to the GitHub raw URL
+      const rawURL = `https://raw.githubusercontent.com/${user}/${repo}/main/${path}`;
+      document.querySelectorAll(`[data-slot="${slotId}"]`).forEach(img=>{
+        img.src = rawURL;
+      });
+
+      uploadedImages++;
+    }
+
+    // ── Step 2: Update index.html with the new image src URLs ──
+    btn.innerHTML='<span>📝</span><span>Updating index.html...</span>';
+    ghSetStatus('Updating index.html...','#e8c45a');
+
+    // Build updated HTML — take current page HTML with updated img src attributes
+    let html = document.documentElement.outerHTML;
+
+    // Fix DOCTYPE (outerHTML doesn't include it)
+    html = '<!DOCTYPE html>\n' + html;
+
+    // Convert to base64 for GitHub API
+    const encoder = new TextEncoder();
+    const htmlBytes = encoder.encode(html);
+    let binary = '';
+    const chunk = 8192;
+    for(let i=0;i<htmlBytes.length;i+=chunk){
+      binary += String.fromCharCode(...htmlBytes.subarray(i,i+chunk));
+    }
+    const htmlBase64 = btoa(binary);
+
+    const indexSHA = await ghGetSHA(user, repo, token, 'index.html');
+    await ghUploadFile(user, repo, token, 'index.html', htmlBase64,
+      `Update school photos (${uploadedImages} images)`, indexSHA);
+
+    ghSetStatus('✅ All done!','#4ade80');
+    peToast(`🎉 ${uploadedImages} photos saved to GitHub!`);
+    btn.innerHTML='<span>✅</span><span>Saved to GitHub!</span>';
+
+    // Show success panel
+    setTimeout(()=>{
+      const ghURL = `https://${user}.github.io/${repo}/`;
+      peToast('🌐 Site live at: '+ghURL);
+      btn.innerHTML='<span>🚀</span><span>Save Photos to GitHub</span>';
+      btn.disabled=false;
+    }, 3000);
+
+  } catch(err){
+    peToast('❌ Error: '+err.message);
+    ghSetStatus('❌ '+err.message,'#f87171');
+    btn.innerHTML='<span>🚀</span><span>Save Photos to GitHub</span>';
+    btn.disabled=false;
+  }
+}
+
+// ─── DOWNLOAD AS FILE (fallback) ─────────────────────────
+function peSaveDownload(){
+  const btn=document.getElementById('pe-save');
+  btn.innerHTML='<span>⏳</span><span>Building...</span>';
+  btn.disabled=true;
+  setTimeout(()=>{
+    try{
+      let html = document.documentElement.outerHTML;
+      const blob = new Blob(['<!DOCTYPE html>\n'+html], {type:'text/html;charset=utf-8'});
+      const url  = URL.createObjectURL(blob);
+      const a    = document.createElement('a');
+      a.href=url; a.download='devine-secondary-school.html';
+      document.body.appendChild(a); a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      peToast('✅ Downloaded! Upload this file to GitHub manually.');
+    } catch(err){ peToast('Error: '+err.message); }
+    btn.innerHTML='<span>⬇️</span><span>Download HTML File Instead</span>';
+    btn.disabled=false;
+  }, 150);
+}
+
+// Keep old peSave as alias
+function peSave(){ peSaveDownload(); }
+</script>
+
+</body>
+</html>
